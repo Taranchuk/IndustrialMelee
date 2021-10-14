@@ -11,7 +11,15 @@ using Verse.AI;
 
 namespace IndustrialMelee
 {
-    public class CompIndustrialArmor : CompReloadable
+    public class CompProperties_IndustrialArmor : CompProperties
+    {
+        public CompProperties_IndustrialArmor()
+        {
+            this.compClass = typeof(CompIndustrialArmor);
+        }
+    }
+
+    public class CompIndustrialArmor : ThingComp
     {
         public Material GetMaterial(Rot4 bodyFacing)
         {
@@ -19,14 +27,14 @@ namespace IndustrialMelee
             ApparelGraphicRecordGetter.TryGetGraphicApparel(apparel, apparel.Wearer.story.bodyType, out var rec);
             return rec.graphic.MatAt(bodyFacing);
         }
-        public override void CompTick()
-        {
-            base.CompTick();
-            if (this.parent.IsHashIntervalTick(100))
-            {
-                Log.Message(this.RemainingCharges + " - " + this.MaxCharges);
-                this.UsedOnce();
-            }
-        }
+
+        //public override void CompTick()
+        //{
+        //    base.CompTick();
+        //    if (this.parent.IsHashIntervalTick(100))
+        //    {
+        //        this.UsedOnce();
+        //    }
+        //}
     }
 }

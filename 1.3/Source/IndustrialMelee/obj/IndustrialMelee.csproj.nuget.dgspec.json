@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Industrial Melee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj": {}
+    "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\IndustrialMelee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj": {}
   },
   "projects": {
-    "c:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Industrial Melee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj": {
+    "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\IndustrialMelee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Industrial Melee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj",
+        "projectUniqueName": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\IndustrialMelee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj",
         "projectName": "IndustrialMelee",
-        "projectPath": "c:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Industrial Melee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj",
+        "projectPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\IndustrialMelee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj",
         "packagesPath": "C:\\Users\\Vova\\.nuget\\packages\\",
-        "outputPath": "c:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Industrial Melee\\1.3\\Source\\IndustrialMelee\\obj\\",
+        "outputPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\IndustrialMelee\\1.3\\Source\\IndustrialMelee\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "configFilePaths": [
@@ -36,7 +36,7 @@
           "dependencies": {
             "Krafs.Rimworld.Ref": {
               "target": "Package",
-              "version": "[1.3.3063-beta, )"
+              "version": "[1.3.3117, )"
             },
             "Lib.Harmony": {
               "target": "Package",

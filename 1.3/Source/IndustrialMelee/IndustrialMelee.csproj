@@ -42,9 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DamageWorker_HammerHead.cs" />
-    <Compile Include="DamageWorker_KnockBack.cs" />
-    <Compile Include="DamageWorker_HeaterSawHandleBash.cs" />
     <Compile Include="CompIndustrialArmor.cs" />
+    <Compile Include="IndustrialMeleeMod.cs" />
+    <Compile Include="IndustrialMeleeSettings.cs" />
     <Compile Include="Verb_ShootImpactBow.cs" />
     <Compile Include="JobDriver_Charge.cs" />
     <Compile Include="HarmonyPatches.cs" />
@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.3.3063-beta</Version>
+      <Version>1.3.3117</Version>
     </PackageReference>
     <PackageReference Include="Lib.Harmony">
       <Version>2.1.0</Version>

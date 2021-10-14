@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.7.2": {
-      "Krafs.Rimworld.Ref/1.3.3063-beta": {
+      "Krafs.Rimworld.Ref/1.3.3117": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -96,7 +96,7 @@
       }
     },
     ".NETFramework,Version=v4.7.2/win": {
-      "Krafs.Rimworld.Ref/1.3.3063-beta": {
+      "Krafs.Rimworld.Ref/1.3.3117": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -190,7 +190,7 @@
       }
     },
     ".NETFramework,Version=v4.7.2/win-x64": {
-      "Krafs.Rimworld.Ref/1.3.3063-beta": {
+      "Krafs.Rimworld.Ref/1.3.3117": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -284,7 +284,7 @@
       }
     },
     ".NETFramework,Version=v4.7.2/win-x86": {
-      "Krafs.Rimworld.Ref/1.3.3063-beta": {
+      "Krafs.Rimworld.Ref/1.3.3117": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -379,16 +379,16 @@
     }
   },
   "libraries": {
-    "Krafs.Rimworld.Ref/1.3.3063-beta": {
-      "sha512": "Mc3imqfmWV5DCEqBYkDM6SkUo9n0WepEKv4sC67R1WoaIjIJWJ8nNYrPNAP2q27lHUFJMbU3rsV58fdEjUwSpQ==",
+    "Krafs.Rimworld.Ref/1.3.3117": {
+      "sha512": "mxTQbelrvwpnVfA+WztZFk68J/49uwbZQPgb1TpG9rC6+rRB0IhJLmR85jZ1Ua7WetNGiwkbmVltDyKlpEGudQ==",
       "type": "package",
-      "path": "krafs.rimworld.ref/1.3.3063-beta",
+      "path": "krafs.rimworld.ref/1.3.3117",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.txt",
         "icon.png",
-        "krafs.rimworld.ref.1.3.3063-beta.nupkg.sha512",
+        "krafs.rimworld.ref.1.3.3117.nupkg.sha512",
         "krafs.rimworld.ref.nuspec",
         "ref/net472/Assembly-CSharp-firstpass.dll",
         "ref/net472/Assembly-CSharp.dll",
@@ -500,7 +500,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.2": [
-      "Krafs.Rimworld.Ref >= 1.3.3063-beta",
+      "Krafs.Rimworld.Ref >= 1.3.3117",
       "Lib.Harmony >= 2.1.0"
     ]
   },
@@ -510,11 +510,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Industrial Melee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj",
+      "projectUniqueName": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\IndustrialMelee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj",
       "projectName": "IndustrialMelee",
-      "projectPath": "c:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Industrial Melee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj",
+      "projectPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\IndustrialMelee\\1.3\\Source\\IndustrialMelee\\IndustrialMelee.csproj",
       "packagesPath": "C:\\Users\\Vova\\.nuget\\packages\\",
-      "outputPath": "c:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Industrial Melee\\1.3\\Source\\IndustrialMelee\\obj\\",
+      "outputPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\IndustrialMelee\\1.3\\Source\\IndustrialMelee\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
@@ -539,7 +539,7 @@
         "dependencies": {
           "Krafs.Rimworld.Ref": {
             "target": "Package",
-            "version": "[1.3.3063-beta, )"
+            "version": "[1.3.3117, )"
           },
           "Lib.Harmony": {
             "target": "Package",

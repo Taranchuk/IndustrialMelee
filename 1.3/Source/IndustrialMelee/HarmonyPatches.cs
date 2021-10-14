@@ -20,7 +20,6 @@ namespace IndustrialMelee
             {
                 human.comps.Add(new CompProperties_AttackCooldown());
             }
-            new Harmony("IndustrialMelee.Mod").PatchAll();
         }
 
         public static Dictionary<Apparel, CompIndustrialArmor> cachedComps = new Dictionary<Apparel, CompIndustrialArmor>();
@@ -53,44 +52,44 @@ namespace IndustrialMelee
         }
     }
 
-    [HarmonyPatch(typeof(StatExtension), nameof(StatExtension.GetStatValue))]
-    public static class GetStatValue_Patch
-    {
-        [HarmonyPriority(Priority.Last)]
-        private static void Postfix(Thing thing, StatDef stat, bool applyPostProcess, ref float __result)
-        {
-            if (stat == StatDefOf.MoveSpeed && thing is Pawn pawn)
-            {
-                if (pawn.CurJobDef == IM_DefOf.IM_Charge)
-                {
-                    __result = Mathf.Max(20, __result * 4.44f);
-                }
-                if (pawn.apparel?.WornApparel != null)
-                {
-                    foreach (var apparel in pawn.apparel.WornApparel)
-                    {
-                        if (apparel.TryGetCompIndustrialArmor(out var comp) && comp.RemainingCharges == 0)
-                        {
-                            __result = 0;
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    //[HarmonyPatch(typeof(StatExtension), nameof(StatExtension.GetStatValue))]
+    //public static class GetStatValue_Patch
+    //{
+    //    [HarmonyPriority(Priority.Last)]
+    //    private static void Postfix(Thing thing, StatDef stat, bool applyPostProcess, ref float __result)
+    //    {
+    //        if (stat == StatDefOf.MoveSpeed && thing is Pawn pawn)
+    //        {
+    //            if (pawn.CurJobDef == IM_DefOf.IM_Charge)
+    //            {
+    //                __result = Mathf.Max(20, __result * 4.44f);
+    //            }
+    //            if (pawn.apparel?.WornApparel != null)
+    //            {
+    //                foreach (var apparel in pawn.apparel.WornApparel)
+    //                {
+    //                    if (apparel.TryGetCompIndustrialArmor(out var comp) && comp.RemainingCharges == 0)
+    //                    {
+    //                        __result = 0;
+    //                        return;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
-    [HarmonyPatch(typeof(CompReloadable), nameof(CompReloadable.NeedsReload))]
-    public static class NeedsReload_Patch
-    {
-        private static void Postfix(CompReloadable __instance, bool allowForcedReload, ref bool __result)
-        {
-            if (__instance is CompIndustrialArmor)
-            {
-                __result = __instance.RemainingCharges / __instance.MaxCharges < 0.3f;
-            }
-        }
-    }
+    //[HarmonyPatch(typeof(CompReloadable), nameof(CompReloadable.NeedsReload))]
+    //public static class NeedsReload_Patch
+    //{
+    //    private static void Postfix(CompReloadable __instance, bool allowForcedReload, ref bool __result)
+    //    {
+    //        if (__instance is CompIndustrialArmor)
+    //        {
+    //            __result = __instance.RemainingCharges / __instance.MaxCharges < 0.3f;
+    //        }
+    //    }
+    //}
 
     [HarmonyPatch(typeof(Verb_MeleeAttackDamage), "ApplyMeleeDamageToTarget")]
     public static class Patch_ApplyMeleeDamageToTarget
@@ -191,12 +190,11 @@ namespace IndustrialMelee
                 {
                     if (apparel.TryGetCompIndustrialArmor(out var comp))
                     {
-                        var mat = comp.GetMaterial(bodyFacing);
-                        Vector3 drawAt = shellLoc;
-                        Matrix4x4 matrix = default(Matrix4x4);
                         Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
-                        matrix.SetTRS(drawAt, quaternion, new Vector3(1.3f, 0, 1.3f));
-                        GenDraw.DrawMeshNowOrLater(bodyMesh, matrix, mat, true);
+                        var material = comp.GetMaterial(bodyFacing);
+                        Vector3 loc = shellLoc;
+                        loc.y += 0.00289575267f;
+                        GenDraw.DrawMeshNowOrLater(bodyMesh, loc, quaternion, material, flags.FlagSet(PawnRenderFlags.DrawNow));
                         return false;
                     }
                 }
@@ -204,6 +202,7 @@ namespace IndustrialMelee
             return true;
         }
     }
+
     [HarmonyPatch(typeof(PawnRenderer), "DrawHeadHair")]
     public static class DrawHeadHair_Patch
     {
@@ -212,7 +211,7 @@ namespace IndustrialMelee
             Pawn pawn = ___pawn;
             if (pawn.apparel.AnyApparel)
             {
-                if (pawn.apparel.WornApparel.Any(x => x.TryGetCompIndustrialArmor(out var comp)))
+                if (pawn.apparel.WornApparel.Any(x => x.def == IM_DefOf.IM_Apparel_IndustrialPowerArmor))
                 {
                     return false;
                 }
@@ -229,7 +228,7 @@ namespace IndustrialMelee
             Pawn pawn = __instance.pawn;
             if (pawn.apparel.AnyApparel && !portrait)
             {
-                if (pawn.apparel.WornApparel.Any(x => x.TryGetCompIndustrialArmor(out var comp)))
+                if (pawn.apparel.WornApparel.Any(x => x.def == IM_DefOf.IM_Apparel_IndustrialPowerArmor))
                 {
                     __result = BaseContent.ClearMat;
                 }
@@ -237,21 +236,21 @@ namespace IndustrialMelee
         }
     }
 
-    [HarmonyPatch(typeof(PawnGraphicSet), "HeadMatAt")]
-    public static class PawnGraphicSet_HeadMatAt_Patch
-    {
-        public static void Postfix(PawnGraphicSet __instance, ref Material __result, Rot4 facing, RotDrawMode bodyCondition = RotDrawMode.Fresh, bool stump = false, bool portrait = false, bool allowOverride = true)
-        {
-            Pawn pawn = __instance.pawn;
-            if (pawn.apparel.AnyApparel && !portrait)
-            {
-                if (pawn.apparel.WornApparel.Any(x => x.TryGetCompIndustrialArmor(out var comp)))
-                {
-                    __result = BaseContent.ClearMat;
-                }
-            }
-        }
-    }
+    //[HarmonyPatch(typeof(PawnGraphicSet), "HeadMatAt")]
+    //public static class PawnGraphicSet_HeadMatAt_Patch
+    //{
+    //    public static void Postfix(PawnGraphicSet __instance, ref Material __result, Rot4 facing, RotDrawMode bodyCondition = RotDrawMode.Fresh, bool stump = false, bool portrait = false, bool allowOverride = true)
+    //    {
+    //        Pawn pawn = __instance.pawn;
+    //        if (pawn.apparel.AnyApparel && !portrait)
+    //        {
+    //            if (pawn.apparel.WornApparel.Any(x => x.def == IM_DefOf.IM_Apparel_IndustrialPowerArmor))
+    //            {
+    //                __result = BaseContent.ClearMat;
+    //            }
+    //        }
+    //    }
+    //}
 
     [HarmonyPatch(typeof(PawnGraphicSet), "MatsBodyBaseAt")]
     public static class PawnGraphicSet_MatsBodyBaseAt_Test_Patch
@@ -266,7 +265,7 @@ namespace IndustrialMelee
             }
             if (pawn.apparel.AnyApparel)
             {
-                if (pawn.apparel.WornApparel.Any(x => x.TryGetCompIndustrialArmor(out var comp)))
+                if (pawn.apparel.WornApparel.Any(x => x.def == IM_DefOf.IM_Apparel_IndustrialPowerArmor))
                 {
                     for (int i = 0; i < __result.Count; i++)
                     {
@@ -276,6 +275,73 @@ namespace IndustrialMelee
             }
         }
     }
+
+    [HarmonyPatch(typeof(RecipeDefGenerator), "ImpliedRecipeDefs")]
+    public static class ImpliedRecipeDefs_Patch
+    {
+        [HarmonyPriority(Priority.First)]
+        public static void Prefix()
+        {
+            if (IndustrialMeleeMod.settings.makeWeaponsAndPowerArmorNonStuffable)
+            {
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_PowerFist);
+                IM_DefOf.IM_MeleeWeapon_PowerFist.costList.Add(new ThingDefCountClass(ThingDefOf.Uranium, 150));
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_PowerClaw);
+                IM_DefOf.IM_MeleeWeapon_PowerClaw.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 100));
+                IM_DefOf.IM_MeleeWeapon_PowerClaw.costList.Add(new ThingDefCountClass(ThingDefOf.Steel, 50));
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_ChainSword);
+                IM_DefOf.IM_MeleeWeapon_ChainSword.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 100));
+                IM_DefOf.IM_MeleeWeapon_ChainSword.costList.Add(new ThingDefCountClass(ThingDefOf.Steel, 50));
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_ImpactBlade);
+                IM_DefOf.IM_MeleeWeapon_ImpactBlade.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 250));
+                IM_DefOf.IM_MeleeWeapon_ImpactBlade.costList.Add(new ThingDefCountClass(ThingDefOf.Uranium, 50));
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_HeaterSaw);
+                IM_DefOf.IM_MeleeWeapon_HeaterSaw.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 100));
+                IM_DefOf.IM_MeleeWeapon_HeaterSaw.costList.Add(new ThingDefCountClass(ThingDefOf.Steel, 50));
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_ImpactAxe);
+                IM_DefOf.IM_MeleeWeapon_ImpactAxe.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 200));
+                IM_DefOf.IM_MeleeWeapon_ImpactAxe.costList.Add(new ThingDefCountClass(ThingDefOf.Steel, 50));
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_ImpactHammer);
+                IM_DefOf.IM_MeleeWeapon_ImpactHammer.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 50));
+                IM_DefOf.IM_MeleeWeapon_ImpactHammer.costList.Add(new ThingDefCountClass(ThingDefOf.Uranium, 300));
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_GoliathSledge);
+                IM_DefOf.IM_MeleeWeapon_GoliathSledge.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 50));
+                IM_DefOf.IM_MeleeWeapon_GoliathSledge.costList.Add(new ThingDefCountClass(ThingDefOf.Uranium, 150));
+
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_DrillSpear);
+                IM_DefOf.IM_MeleeWeapon_DrillSpear.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 200));
+                IM_DefOf.IM_MeleeWeapon_DrillSpear.costList.Add(new ThingDefCountClass(ThingDefOf.Uranium, 50));
+
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_RocketLance);
+                IM_DefOf.IM_MeleeWeapon_RocketLance.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 200));
+                IM_DefOf.IM_MeleeWeapon_RocketLance.costList.Add(new ThingDefCountClass(ThingDefOf.Uranium, 50));
+                RemoveMetallicCost(IM_DefOf.IM_Cyrogatana);
+                IM_DefOf.IM_Cyrogatana.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 50));
+                IM_DefOf.IM_Cyrogatana.costList.Add(new ThingDefCountClass(ThingDefOf.Steel, 100));
+                RemoveMetallicCost(IM_DefOf.IM_MeleeWeapon_GunLance);
+                IM_DefOf.IM_MeleeWeapon_GunLance.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 200));
+                IM_DefOf.IM_MeleeWeapon_GunLance.costList.Add(new ThingDefCountClass(ThingDefOf.Uranium, 50));
+
+                RemoveMetallicCost(IM_DefOf.IM_ImpactBow);
+                IM_DefOf.IM_ImpactBow.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 200));
+                IM_DefOf.IM_ImpactBow.costList.Add(new ThingDefCountClass(ThingDefOf.Uranium, 50));
+
+                RemoveMetallicCost(IM_DefOf.IM_Apparel_IndustrialPowerArmor);
+                IM_DefOf.IM_Apparel_IndustrialPowerArmor.costList.Add(new ThingDefCountClass(ThingDefOf.Plasteel, 500));
+                IM_DefOf.IM_Apparel_IndustrialPowerArmor.costList.Add(new ThingDefCountClass(ThingDefOf.Uranium, 500));
+
+                IM_DefOf.IM_Apparel_IndustrialPowerArmor.graphicData.texPath = "Things/Item/Apparel/IndustrialPowerArmor/IndustrialPowerArmorNonStuffable";
+                IM_DefOf.IM_Apparel_IndustrialPowerArmor.apparel.wornGraphicPath = "Things/Item/Apparel/IndustrialPowerArmor/IndustrialPowerArmorNonStuffable";
+            }
+        }
+
+        private static void RemoveMetallicCost(ThingDef def)
+        {
+            def.costStuffCount = -1;
+            def.stuffCategories.Clear();
+        }
+    }
+
 
     [HarmonyPatch(typeof(Pawn), "GetGizmos")]
 	public class Pawn_GetGizmos_Patch
@@ -344,21 +410,6 @@ namespace IndustrialMelee
             targetingParameters.validator = (TargetInfo x) => x.Thing is Pawn victim && !victim.Downed && !victim.Dead && user.Position.DistanceTo(x.Cell) <= 20;
             return targetingParameters;
         }
-    }
-
-	[DefOf]
-    public static class IM_DefOf
-    {
-        public static HediffDef IM_HighBleedrate;
-        public static HediffDef IM_10MoreBleedrate;
-        public static ThingDef IM_MeleeWeapon_RocketLance;
-        public static ThingDef IM_MeleeWeapon_ImpactHammer;
-        public static ThingDef IM_ImpactBow;
-        public static ThingDef IM_ArrowExplosive;
-        public static JobDef IM_Charge;
-        public static ThingDef IM_MeleeWeapon_ChainSword;
-        public static ThingDef IM_MeleeWeapon_HeaterSaw;
-        public static ThingDef IM_MeleeWeapon_DrillSpear;
     }
 
     public enum AttackType

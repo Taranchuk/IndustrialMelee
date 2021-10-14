@@ -5,7 +5,7 @@
 	<ThingDef ParentName="BaseHumanMakeableGun">
 		<defName>IM_MeleeWeapon_GunLance</defName>
 		<label>gun lance</label>
-		<description>Another creation of an idiot obsessed with lances.</description>
+		<description>A cousin to the Rocket Lance, but made with simpler design. The Gun Lance uses large slug rounds similar to advanced shotguns to shred its enemies. The weapon itself has an overdriven piston system to deliver power swings in melee combat with its blades similar to the Rocket Lance.</description>
 		<graphicData>
 			<texPath>Things/Item/Equipment/WeaponRanged/GunLance</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -26,13 +26,18 @@
 		</statBases>
 		<equippedAngleOffset>-25</equippedAngleOffset>
 		<costList>
+			<!--
+			<Plasteel>200</Plasteel>
+			<Uranium>50</Uranium> -->
 			<ComponentIndustrial>10</ComponentIndustrial>
 			<Chemfuel>50</Chemfuel>
 		</costList>
+
 		<stuffCategories>
 			<li>Metallic</li>
 		</stuffCategories>
 		<costStuffCount>400</costStuffCount>
+		
 		<recipeMaker>
 			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 			<workSkill>Crafting</workSkill>
@@ -79,13 +84,6 @@
 				<power>30</power>
 				<cooldownTime>2</cooldownTime>
 				<armorPenetration>0.6</armorPenetration>
-				<extraMeleeDamages>
-					<li>
-						<def>Stun</def>
-						<amount>180</amount>
-						<chance>0.3</chance>
-					</li>
-				</extraMeleeDamages>
 			</li>
 		</tools>
 		<comps>
@@ -122,21 +120,26 @@
 	<ThingDef ParentName="BaseHumanMakeableGun">
 		<defName>IM_ImpactBow</defName>
 		<label>impact bow</label>
-		<description>Research And Development Department decided this was a melee weapon.</description>
+		<description>A mechanical bow reinforced with larger limbs which feature an internal cycling piston and combustion system. The bow is a silent killer. It has a high impact in total silence. With a flip of a switch its arrows become devastating explosives.</description>
 		<techLevel>Industrial</techLevel>
 		<graphicData>
-			<texPath>Things/Item/Equipment/WeaponRanged/BowGreat</texPath>
+			<texPath>Things/Item/Equipment/WeaponRanged/ImpactBow</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<soundInteract>Bow_Large</soundInteract>
 		<costList>
+			<!--
+			<Plasteel>200</Plasteel>
+			<Uranium>50</Uranium> -->
 			<ComponentIndustrial>10</ComponentIndustrial>
 			<Chemfuel>50</Chemfuel>
 		</costList>
+
 		<stuffCategories>
 			<li>Metallic</li>
 		</stuffCategories>
 		<costStuffCount>400</costStuffCount>
+		
 		<thingSetMakerTags>
 			<li>RewardStandardQualitySuper</li>
 		</thingSetMakerTags>
@@ -222,7 +225,7 @@
 		<defName>IM_ArrowExplosive</defName>
 		<label>impact bow explosive arrow</label>
 		<graphicData>
-			<texPath>Things/Projectile/Arrow_Small</texPath>
+			<texPath>Things/Item/Projectiles/ExplodingArrow</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<thingClass>Projectile_Explosive</thingClass>

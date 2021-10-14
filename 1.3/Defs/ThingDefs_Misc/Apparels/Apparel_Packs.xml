@@ -30,10 +30,11 @@
 			</li>
 		</comps>
 	</ThingDef>
+	
 	<ThingDef ParentName="IM_IndustrialExoFrame">
 		<defName>IM_Apparel_IndustrialExoFrame</defName>
 		<label>industrial exo frame</label>
-		<description>An industrial motorized frame created to allow humans to carry things past their given limits.</description>
+		<description>An motorized and mechanized frame created to enhance human carry and work limitations.</description>
 		<recipeMaker>
 			<unfinishedThingDef>UnfinishedPack</unfinishedThingDef>
 			<researchPrerequisite>IM_IndustrialExo</researchPrerequisite>
@@ -51,9 +52,9 @@
 		</recipeMaker>
 		<costList>
 			<Uranium>50</Uranium>
-			<Steel>300</Steel>
-			<ComponentIndustrial>10</ComponentIndustrial>
-			<Chemfuel>100</Chemfuel>
+			<Steel>200</Steel>
+			<ComponentIndustrial>5</ComponentIndustrial>
+			<Chemfuel>50</Chemfuel>
 		</costList>
 		<graphicData>
 			<texPath>Things/Item/Apparel/IndustrialExoFrame/IndustrialExoFrame</texPath>
@@ -112,4 +113,5 @@
 			<li>ExoticMisc</li>
 		</tradeTags>
 	</ThingDef>
+	
 </Defs>
